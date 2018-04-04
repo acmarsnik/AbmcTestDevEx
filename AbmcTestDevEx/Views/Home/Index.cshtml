@@ -3,27 +3,124 @@
 <h2>Home</h2>
 
 @(Html.DevExtreme().DataGrid<Order>()
-    .ShowBorders(true)
-    .DataSource(d => d.Mvc().Controller("Orders").LoadAction("Get").Key("OrderID"))
-    .Columns(columns => {
-        columns.AddFor(m => m.OrderID);
-        columns.AddFor(m => m.OrderDate);
-        columns.AddFor(m => m.CustomerName);
-        columns.AddFor(m => m.ShipCountry);
-        columns.AddFor(m => m.ShipCity);
-    })
-    .Paging(p => p.PageSize(10))
-    .FilterRow(f => f.Visible(true))
-    .HeaderFilter(f => f.Visible(true))
-    .GroupPanel(p => p.Visible(true))
-    .Grouping(g => g.AutoExpandAll(false))
-    .RemoteOperations(true)
-    .Summary(s => s
-        .TotalItems(totalItems => {
-            totalItems.AddFor(m => m.ShipCity).SummaryType(SummaryType.Count);
+        .ShowBorders(true)
+        .DataSource(d => d.Mvc().Controller("Orders").LoadAction("Get").Key("OrderID"))
+        .Columns(columns =>
+        {
+            columns.AddFor(m => m.OrderID);
+            columns.AddFor(m => m.OrderDate);
+            columns.AddFor(m => m.CustomerName);
+            columns.AddFor(m => m.ShipCountry);
+            columns.AddFor(m => m.ShipCity);
         })
-        .GroupItems(groupItems => {
-            groupItems.Add().SummaryType(SummaryType.Count);
+        .Paging(p => p.PageSize(10))
+        .FilterRow(f => f.Visible(true))
+        .HeaderFilter(f => f.Visible(true))
+        .GroupPanel(p => p.Visible(true))
+        .Grouping(g => g.AutoExpandAll(false))
+        .RemoteOperations(true)
+        .Summary(s => s
+            .TotalItems(totalItems =>
+            {
+                totalItems.AddFor(m => m.ShipCity).SummaryType(SummaryType.Count);
+            })
+            .GroupItems(groupItems =>
+            {
+                groupItems.Add().SummaryType(SummaryType.Count);
+            })
+        )
+)
+
+@(Html.DevExtreme().DataGrid<DrawFromAbmc.RootObject>()
+        .ShowBorders(true)
+        .DataSource(d => d.Mvc().Controller("DrawFromAbmcs").LoadAction("Get").Key("TrimbleItemId"))
+        .ColumnChooser(c => c.Enabled(true))
+        .AllowColumnReordering(true)
+        .AllowColumnResizing(true)
+        .ColumnAutoWidth(true)
+        .Option("columnResizingMode", "widget")
+        .Option("showColumnLines", true)
+        .Option("showRowLines", true)
+        .Option("showRowBorders", true)
+        .Option("rowAlternationEnabled", true)
+        .Selection(s => s.Mode(SelectionMode.Multiple))
+        .Export(e => e.Enabled(true).FileName("Abmc").AllowExportSelectedData(true))
+        .GroupPanel(p => p.Visible(true))
+        .Columns(columns =>
+        {
+            columns.AddFor(d => d.TrimbleItemId);
+            columns.AddFor(d => d.Name);
+            columns.AddFor(d => d.FittingCategory);
+            columns.AddFor(d => d.FittingType);
+            columns.AddFor(d => d.ContributorItemDetail1ContributorId);
+            columns.AddFor(d => d.ContributorItemDetail1Id);
+            columns.AddFor(d => d.ContributorItemDetail1InsulationThickness);
+            columns.AddFor(d => d.ContributorItemDetail1LinerThickness);
+            columns.AddFor(d => d.ContributorItemDetail1LocationX);
+            columns.AddFor(d => d.ContributorItemDetail1LocationY);
+            columns.AddFor(d => d.ContributorItemDetail1LocationZ);
+            columns.AddFor(d => d.ContributorItemDetail1ModelChangeChangeId);
+            columns.AddFor(d => d.ContributorItemDetail1ModelChangeId);
+            columns.AddFor(d => d.ContributorItemDetail1ModelChangeTimeOfChange);
+            columns.AddFor(d => d.ContributorItemDetail1ModelChangeUserSessionId);
+            columns.AddFor(d => d.ContributorItemDetail1ModelChangeVersion);
+            columns.AddFor(d => d.ContributorItemDetail1PricingDiscountMultiplier);
+            columns.AddFor(d => d.ContributorItemDetail1PricingPikcCode);
+            columns.AddFor(d => d.ContributorItemDetail1PricingPrice);
+            columns.AddFor(d => d.ContributorItemDetail1PricingPriceCode);
+            columns.AddFor(d => d.ContributorItemDetail1PricingQuantity);
+            columns.AddFor(d => d.ContributorItemDetail1PricingTotalLaborCost);
+            columns.AddFor(d => d.ContributorItemDetail1PricingTotalLaborHours);
+            columns.AddFor(d => d.ContributorItemDetail1PricingUpcCode);
+            columns.AddFor(d => d.ContributorItemDetail1PropertiesTakeOffLineNum);
+            columns.AddFor(d => d.ContributorItemDetail1PropertiesMetric);
+            columns.AddFor(d => d.ContributorItemDetail1PropertiesAuditTrailID);
+            columns.AddFor(d => d.ContributorItemDetail1PropertiesAttachedToID);
+            columns.AddFor(d => d.ContributorItemDetail1PropertiesIsAttachedFrom);
+            columns.AddFor(d => d.ContributorItemDetail1PropertiesVertical);
+            columns.AddFor(d => d.ContributorItemDetail1PropertiesX);
+            columns.AddFor(d => d.ContributorItemDetail1PropertiesY);
+            columns.AddFor(d => d.ContributorItemDetail1PropertiesAlternate);
+            columns.AddFor(d => d.ContributorItemDetail1PropertiesZone);
+            columns.AddFor(d => d.ContributorItemDetail1PropertiesSymbol);
+            columns.AddFor(d => d.ContributorItemDetail1PropertiesLine);
+            columns.AddFor(d => d.ContributorItemDetail1PropertiesReportCat);
+            columns.AddFor(d => d.ContributorItemDetail1PropertiesSpec);
+            columns.AddFor(d => d.ContributorItemDetail1PropertiesMaterialName);
+            columns.AddFor(d => d.ContributorItemDetail1PropertiesWeight);
+            columns.AddFor(d => d.ContributorItemDetail1PropertiesLocation);
+            columns.AddFor(d => d.ContributorItemDetail1PropertiesLaborField);
+            columns.AddFor(d => d.ContributorItemDetail1PropertiesLaborField_x0020__x0020_Shop);
+            columns.AddFor(d => d.ContributorItemDetail1PropertiesLaborShop);
+            columns.AddFor(d => d.ContributorItemDetail1PropertiesPricingPikcCode);
+            columns.AddFor(d => d.ContributorItemDetail1PropertiesPricingPrice);
+            columns.AddFor(d => d.ContributorItemDetail1PropertiesPricingPriceCode);
+            columns.AddFor(d => d.ContributorItemDetail1PropertiesPricingQuantity);
+            columns.AddFor(d => d.ContributorItemDetail1PropertiesPricingTotalLaborCost);
+            columns.AddFor(d => d.ContributorItemDetail1PropertiesPricingTotalLaborHours);
+            columns.AddFor(d => d.ContributorItemDetail1PropertiesPricingUpcCode);
+            columns.AddFor(d => d.ContributorItemDetail1PropertiesScopesSystem);
+            columns.AddFor(d => d.ContributorItemDetail1PropertiesScopesFloor);
+            columns.AddFor(d => d.ContributorItemDetail1ScopesSystem);
+            columns.AddFor(d => d.ContributorItemDetail1ScopesFloor);
+            columns.AddFor(d => d.ContributorItemDetail1TypeOfChange);
+            columns.AddFor(d => d.ContributorItemDetail1Units);
+            columns.AddFor(d => d.Version);
         })
-    )
+        .Paging(p => p.PageSize(10))
+        .FilterRow(f => f.Visible(true))
+        .HeaderFilter(f => f.Visible(true))
+        .GroupPanel(p => p.Visible(true))
+        .Grouping(g => g.AutoExpandAll(false))
+        .RemoteOperations(true)
+        .Summary(s => s
+            .TotalItems(totalItems =>
+            {
+                totalItems.AddFor(d => d.TrimbleItemId).SummaryType(SummaryType.Count);
+            })
+            .GroupItems(groupItems =>
+            {
+                groupItems.Add().SummaryType(SummaryType.Count);
+            })
+        )
 )
