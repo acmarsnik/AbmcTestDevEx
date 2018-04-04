@@ -2,7 +2,9 @@
 
 <h2>Home</h2>
 
-@(Html.DevExtreme().DataGrid<Order>()
+@*
+    Generated Code
+    @(Html.DevExtreme().DataGrid<Order>()
         .ShowBorders(true)
         .DataSource(d => d.Mvc().Controller("Orders").LoadAction("Get").Key("OrderID"))
         .Columns(columns =>
@@ -29,11 +31,11 @@
                 groupItems.Add().SummaryType(SummaryType.Count);
             })
         )
-)
+)*@
 
 @(Html.DevExtreme().DataGrid<DrawFromAbmc.RootObject>()
         .ShowBorders(true)
-        .DataSource(d => d.Mvc().Controller("DrawFromAbmcs").LoadAction("Get").Key("TrimbleItemId"))
+        .DataSource(d => d.Mvc().Controller("Home").LoadAction("Get").Key("TrimbleItemId"))
         .ColumnChooser(c => c.Enabled(true))
         .AllowColumnReordering(true)
         .AllowColumnResizing(true)

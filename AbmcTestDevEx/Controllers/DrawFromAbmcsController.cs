@@ -14,17 +14,19 @@ namespace AbmcTestDevEx.Controllers
     [Route("api/[controller]")]
     public class DrawFromAbmcsController : Controller
     {
+        public static WebClient wc = new WebClient();
+        public static string json = wc.DownloadString("https://www.jasonbase.com/things/jWne.json");
+        public static List<DrawFromAbmc.RootObject> result = JsonConvert.DeserializeObject<List<DrawFromAbmc.RootObject>>(json);
 
         [HttpGet]
         public object Get(DataSourceLoadOptions loadOptions)
         {
-            
-            using (WebClient wc = new WebClient())
-            {
-                var json = wc.DownloadString("https://www.jasonbase.com/things/jWne.json");
-                var result = JsonConvert.DeserializeObject<List<DrawFromAbmc.RootObject>>(json);
                 return DataSourceLoader.Load(result, loadOptions);
-            }
+        }
+
+        public ActionResult Index()
+        {
+            return View(result);
         }
 
     }
