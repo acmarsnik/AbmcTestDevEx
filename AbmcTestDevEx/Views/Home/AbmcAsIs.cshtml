@@ -6,12 +6,117 @@
 <h2>DrawFromAbmcAsIs</h2>
 
 @(Html.DevExtreme().DataGrid<AbmcAsIs.RootObject>()
-                                .ShowBorders(true)
-                                .DataSource(d => d.Mvc().Controller("AbmcAsIs").LoadAction("Get").Key("trimbleItemId"))
+                                        .ShowBorders(true)
+                                        .DataSource(d => d.Mvc().Controller("AbmcAsIs").LoadAction("Get").Key("trimbleItemId"))
+                                        .ColumnChooser(c => c.Enabled(true))
+                                        .AllowColumnReordering(true)
+                                        .AllowColumnResizing(true)
+                                        .ColumnAutoWidth(true)
+                                        .Option("columnResizingMode", "widget")
+                                        .Option("showColumnLines", true)
+                                        .Option("showRowLines", true)
+                                        .Option("showRowBorders", true)
+                                        .Option("rowAlternationEnabled", true)
+                                        .Selection(s => s.Mode(SelectionMode.Multiple))
+                                        .Export(e => e.Enabled(true).FileName("AbmcAsIs").AllowExportSelectedData(true))
+                                        .GroupPanel(p => p.Visible(true))
+                                        .Columns(columns =>
+                                        {
+                                            columns.AddFor(ar => ar.fittingCategory);
+                                            columns.AddFor(ar => ar.fittingType);
+                                            columns.AddFor(ar => ar.name);
+                                            columns.AddFor(ar => ar.trimbleAssemblyItemId);
+                                            columns.AddFor(ar => ar.trimbleItemId);
+                                            columns.AddFor(ar => ar.version);
+                                        })
+                                        .Paging(p => p.PageSize(10))
+                                        .FilterRow(f => f.Visible(true))
+                                        .HeaderFilter(f => f.Visible(true))
+                                        .GroupPanel(p => p.Visible(true))
+                                        .Grouping(g => g.AutoExpandAll(false))
+                                        .RemoteOperations(true)
+                                        .Summary(s => s
+                                            .TotalItems(totalItems =>
+                                            {
+                                                totalItems.AddFor(d => d.trimbleItemId).SummaryType(SummaryType.Count);
+                                            })
+                                            .GroupItems(groupItems =>
+                                            {
+                                                groupItems.Add().SummaryType(SummaryType.Count);
+                                            })
+                                        )
+                                        .MasterDetail(md => md
+                                        .Enabled(true)
+                                        .Template(new TemplateName("contributorItemDetail"))
+                    )
+)
+
+@using (Html.DevExtreme().NamedTemplate("contributorItemDetail"))
+{
+    <div class="master-detail-caption"><%= data.trimbleItemId %>'s Contributor Item Details:</div>
+    @(Html.DevExtreme().DataGrid<AbmcAsIs.ContributorItemDetail>()
+                                            .DataSource(d => d.WebApi()
+                                        .Controller("AbmcAsIs")
+                                        .LoadAction("GetContributorItemDetailsByTrimbleItemId")
+                                        .Key("itemChangeId")
+                                        .LoadParams(new
+                                        {
+                                            trimbleItemId = new JS("data.trimbleItemId")
+                                        })
+                                    )
+                                            .ShowBorders(true)
+                                            .Paging(p => p.PageSize(5))
+                                            .ColumnChooser(c => c.Enabled(true))
+                                            .AllowColumnReordering(true)
+                                            .AllowColumnResizing(true)
+                                            .Option("columnResizingMode", "widget")
+                                            .Option("showColumnLines", true)
+                                            .Option("showRowLines", true)
+                                            .Option("showRowBorders", true)
+                                            .Option("rowAlternationEnabled", true)
+                                            .Selection(s => s.Mode(SelectionMode.Multiple))
+                                            .Export(e => e.Enabled(true).FileName("AbmcAsIs").AllowExportSelectedData(true))
+                                            .GroupPanel(p => p.Visible(true))
+                                            .ShowBorders(true)
+                                            .Columns(columns =>
+                                            {
+                                                columns.AddFor(cid => cid.contributorId);
+                                                columns.AddFor(cid => cid.itemChangeId);
+                                                columns.AddFor(cid => cid.insulationThickness);
+                                                columns.AddFor(cid => cid.insulationType);
+                                                columns.AddFor(cid => cid.linerThickness);
+                                                columns.AddFor(cid => cid.linerType);
+                                                columns.AddFor(cid => cid.typeOfChange);
+                                                columns.AddFor(cid => cid.units);
+                                            })
+                                            .Summary(s => s
+                                                .TotalItems(totalItems =>
+                                                {
+                                                    totalItems.Add()
+                                        .Column("UnitPrice")
+                                        .SummaryType(SummaryType.Sum)
+                                        .ValueFormat(f => f
+                                            .Currency("USD")
+                                            .Precision(2)
+                                        );
+
+                                                    totalItems.Add()
+                                        .Column("Quantity")
+                                        .SummaryType(SummaryType.Count);
+                                                })
+                                            )
+    )
+}
+
+@*{
+    md.Enabled(true);
+    md.Template(@<text>
+        <div class="master-detail-caption"><%= data.trimbleItemId %> Contributor Item Details:</div>
+        @(Html.DevExtreme().DataGrid<AbmcAsIs.ContributorItemDetail>()
+                                .ColumnAutoWidth(true)
                                 .ColumnChooser(c => c.Enabled(true))
                                 .AllowColumnReordering(true)
                                 .AllowColumnResizing(true)
-                                .ColumnAutoWidth(true)
                                 .Option("columnResizingMode", "widget")
                                 .Option("showColumnLines", true)
                                 .Option("showRowLines", true)
@@ -20,91 +125,7 @@
                                 .Selection(s => s.Mode(SelectionMode.Multiple))
                                 .Export(e => e.Enabled(true).FileName("AbmcAsIs").AllowExportSelectedData(true))
                                 .GroupPanel(p => p.Visible(true))
-                                .Columns(columns =>
-                                {
-                                    columns.AddFor(ar => ar.fittingCategory);
-                                    columns.AddFor(ar => ar.fittingType);
-                                    columns.AddFor(ar => ar.name);
-                                    columns.AddFor(ar => ar.trimbleAssemblyItemId);
-                                    columns.AddFor(ar => ar.trimbleItemId);
-                                    columns.AddFor(ar => ar.version);
-                                })
-                                .Paging(p => p.PageSize(10))
-                                .FilterRow(f => f.Visible(true))
-                                .HeaderFilter(f => f.Visible(true))
-                                .GroupPanel(p => p.Visible(true))
-                                .Grouping(g => g.AutoExpandAll(false))
-                                .RemoteOperations(true)
-                                .Summary(s => s
-                                    .TotalItems(totalItems =>
-                                    {
-                                        totalItems.AddFor(d => d.trimbleItemId).SummaryType(SummaryType.Count);
-                                    })
-                                    .GroupItems(groupItems =>
-                                    {
-                                        groupItems.Add().SummaryType(SummaryType.Count);
-                                    })
-                                )
-                                .MasterDetail(md =>
-                                {
-                                md.Enabled(true);
-                                md.Template(@<text>
-                                        <div class="master-detail-caption"><%= data.trimbleItemId %> Contributor Item Details:</div>
-                                        @(Html.DevExtreme().DataGrid<AbmcAsIs.ContributorItemDetail>()
-                                                        .ColumnAutoWidth(true)
-                                                        .ColumnChooser(c => c.Enabled(true))
-                                                        .AllowColumnReordering(true)
-                                                        .AllowColumnResizing(true)
-                                                        .Option("columnResizingMode", "widget")
-                                                        .Option("showColumnLines", true)
-                                                        .Option("showRowLines", true)
-                                                        .Option("showRowBorders", true)
-                                                        .Option("rowAlternationEnabled", true)
-                                                        .Selection(s => s.Mode(SelectionMode.Multiple))
-                                                        .Export(e => e.Enabled(true).FileName("AbmcAsIs").AllowExportSelectedData(true))
-                                                        .GroupPanel(p => p.Visible(true))
-                                                        .ShowBorders(true)
-                                                        .Columns(columns =>
-                                                        {
-                                                                    columns.AddFor(cid => cid.contributorId);
-                                                                    columns.AddFor(cid => cid.itemChangeId);
-                                                                    columns.AddFor(cid => cid.insulationThickness);
-                                                                    columns.AddFor(cid => cid.insulationType);
-                                                                    columns.AddFor(cid => cid.linerThickness);
-                                                                    columns.AddFor(cid => cid.linerType);
-                                                                    columns.AddFor(cid => cid.typeOfChange);
-                                                                    columns.AddFor(cid => cid.units);
-                                                                })
-                                                        .DataSource(d => d.WebApi()
-                                        .Controller("AbmcAsIs")
-                                        .LoadAction("GetContributorItemDetailsByTrimbleItemId")
-                                        .Key("itemChangeId")
-                                        .LoadParams(new
-                                                {
-                                                    trimbleItemId = new JS("data.trimbleItemId")
-                                                })
-                                    )
-                                        )
-                                    </text>);
-                                                                })
-)@*.Template(new TemplateName("contributorItemDetail"))
-            )
-    )
-
-    @using (Html.DevExtreme().NamedTemplate("contributorItemDetail"))
-    {
-        @(Html.DevExtreme().DataGrid<AbmcAsIs.ContributorItemDetail>()
-                                .DataSource(d => d.WebApi()
-                            .Controller("AbmcAsIs")
-                            .LoadAction("GetContributorItemDetailsByTrimbleItemId")
-    .Key("itemChangeId")
-                            .LoadParams(new
-                            {
-                                trimbleItemId = new JS("data.trimbleItemId")
-                            })
-                        )
                                 .ShowBorders(true)
-                                .Paging(p => p.PageSize(5))
                                 .Columns(columns =>
                                 {
                                     columns.AddFor(cid => cid.contributorId);
@@ -116,21 +137,15 @@
                                     columns.AddFor(cid => cid.typeOfChange);
                                     columns.AddFor(cid => cid.units);
                                 })
-                                .Summary(s => s
-                                    .TotalItems(totalItems =>
-                                    {
-                                        totalItems.Add()
-                            .Column("UnitPrice")
-                            .SummaryType(SummaryType.Sum)
-                            .ValueFormat(f => f
-                                .Currency("USD")
-                                .Precision(2)
-                            );
-
-                                        totalItems.Add()
-                            .Column("Quantity")
-                            .SummaryType(SummaryType.Count);
-                                    })
-                                )
+                                .DataSource(d => d.WebApi()
+                .Controller("AbmcAsIs")
+                .LoadAction("GetContributorItemDetailsByTrimbleItemId")
+                .Key("itemChangeId")
+                .LoadParams(new
+                {
+                    trimbleItemId = new JS("data.trimbleItemId")
+                })
+            )
         )
-    }*@
+    </text>);
+    })*@
