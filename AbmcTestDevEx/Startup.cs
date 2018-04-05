@@ -18,8 +18,8 @@ namespace AbmcTestDevEx
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
-                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+                .AddJsonFile("appsettings.abmcFlatJson", optional: true, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.abmcFlatJson", optional: true)
                 .AddEnvironmentVariables();
             Configuration = builder.Build();
         }

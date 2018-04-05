@@ -18,10 +18,10 @@ namespace AbmcTestDevEx.Controllers {
             return DataSourceLoader.Load(SampleData.Orders, loadOptions);
         }
 
-        public ActionResult Index()
-        {
-            return View(DrawFromAbmcsController.result);
-        }
+        //public ActionResult Index()
+        //{
+        //    return View(DrawFromAbmcFlatController.result);
+        //}
 
     }
 }

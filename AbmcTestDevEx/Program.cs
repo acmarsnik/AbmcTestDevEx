@@ -16,8 +16,8 @@ namespace AbmcTestDevEx
         {
             using (WebClient wc = new WebClient())
             {
-                var json = wc.DownloadString("https://www.jasonbase.com/things/2dqn.json");
-                //EmptyData.empty = JsonConvert.DeserializeObject<List<Empty>>(json);
+                var json = wc.DownloadString("https://www.jasonbase.com/things/2dqn.abmcFlatJson");
+                //EmptyData.empty = JsonConvert.DeserializeObject<List<Empty>>(abmcFlatJson);
             }
         var host = new WebHostBuilder()
                 .UseKestrel()

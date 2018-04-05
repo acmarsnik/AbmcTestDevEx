@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AbmcTestDevEx.Models
 {
-    public class DrawFromAbmc
+    public class AbmcFlat
     {
         public class ContributorItemDetail2Connection1PropertiesConnectedTo
         {
